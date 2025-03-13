@@ -13,6 +13,7 @@ import NotFound from '@/pages/NotFound';
 
 // Context providers
 import { AlertProvider } from '@/context/AlertContext';
+import DriverView from './pages/Driver';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ function App() {
               <Route path="/configuration" element={<Configuration />} />
               <Route path="/history" element={<History />} />
               <Route path="*" element={<NotFound />} />
+              <Route path="/driver" element = {<DriverView />} />
             </Routes>
           </Router>
           <Toaster />
