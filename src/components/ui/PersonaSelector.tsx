@@ -5,7 +5,6 @@ import { PERSONAS, PersonaType } from '@/utils/alertTypes';
 import { cn } from '@/lib/utils';
 import { CheckCircle2 } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
-import { useLanguage } from '@/i18n/LanguageContext';
 
 interface PersonaSelectorProps {
   selectedPersona: string | null;
@@ -18,8 +17,6 @@ export function PersonaSelector({
   onSelectPersona, 
   className 
 }: PersonaSelectorProps) {
-  const { t } = useLanguage();
-  
   // Get icon from string name
   const getIconComponent = (iconName: string) => {
     const Icon = (LucideIcons as any)[iconName] || LucideIcons.User;

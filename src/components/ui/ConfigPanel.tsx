@@ -29,7 +29,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from '@/lib/utils';
-import { useLanguage } from '@/i18n/LanguageContext';
 
 interface ConfigPanelProps {
   className?: string;
@@ -38,8 +37,6 @@ interface ConfigPanelProps {
 export function ConfigPanel({ className }: ConfigPanelProps) {
   const { processingInterval, setProcessingInterval } = useAlerts();
   const [selectedInterval, setSelectedInterval] = useState(processingInterval);
-  const { t } = useLanguage();
-  
   const [enabledAlertTypes, setEnabledAlertTypes] = useState<{[key in AlertType]?: boolean}>({
     'route-deviation': true,
     'weather-condition': true,
@@ -80,17 +77,17 @@ export function ConfigPanel({ className }: ConfigPanelProps) {
   const saveConfiguration = () => {
     setProcessingInterval(selectedInterval);
     
-    toast.success(t('common.save'), {
-      description: `${t('pages.configuration.processingInterval')}: ${selectedInterval} ${t('pages.configuration.minutes')}.`,
+    toast.success('Configuration saved', {
+      description: `Alert processing interval set to ${selectedInterval} minutes.`,
     });
   };
 
   return (
     <Card className={cn('max-w-3xl mx-auto', className)}>
       <CardHeader>
-        <CardTitle className="font-display text-2xl">{t('pages.configuration.panelTitle')}</CardTitle>
+        <CardTitle className="font-display text-2xl">Alert Configuration</CardTitle>
         <CardDescription>
-          {t('pages.configuration.panelDescription')}
+          Customize how alerts are processed and displayed
         </CardDescription>
       </CardHeader>
       
@@ -98,10 +95,10 @@ export function ConfigPanel({ className }: ConfigPanelProps) {
         {/* Processing Interval */}
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <Label htmlFor="interval" className="text-base">{t('pages.configuration.processingInterval')}</Label>
+            <Label htmlFor="interval" className="text-base">Processing Interval</Label>
             <div className="flex items-center text-sm">
               <Clock className="h-4 w-4 mr-1" />
-              <span>{selectedInterval} {t('pages.configuration.minutes')}</span>
+              <span>{selectedInterval} minutes</span>
             </div>
           </div>
           
@@ -121,13 +118,13 @@ export function ConfigPanel({ className }: ConfigPanelProps) {
           </div>
           
           <p className="text-xs text-muted-foreground italic">
-            {t('pages.configuration.intervalDescription')} {selectedInterval} {t('pages.configuration.intervalMoreInfo')}
+            Alerts will be processed and consolidated every {selectedInterval} minutes to avoid notification overload.
           </p>
         </div>
         
         {/* Alert Types */}
         <div className="space-y-4">
-          <Label className="text-base">{t('pages.configuration.alertTypes')}</Label>
+          <Label className="text-base">Alert Types</Label>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {alertTypes.map(type => (
@@ -145,11 +142,11 @@ export function ConfigPanel({ className }: ConfigPanelProps) {
         
         {/* Alert Thresholds */}
         <div className="space-y-4">
-          <Label className="text-base">{t('pages.configuration.priorityThresholds')}</Label>
+          <Label className="text-base">Priority Thresholds</Label>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="high-threshold">{t('pages.configuration.highPriority')}</Label>
+              <Label htmlFor="high-threshold">High Priority</Label>
               <Select defaultValue="immediate">
                 <SelectTrigger>
                   <SelectValue placeholder="Select threshold" />
@@ -164,7 +161,7 @@ export function ConfigPanel({ className }: ConfigPanelProps) {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="medium-threshold">{t('pages.configuration.mediumPriority')}</Label>
+              <Label htmlFor="medium-threshold">Medium Priority</Label>
               <Select defaultValue="15min">
                 <SelectTrigger>
                   <SelectValue placeholder="Select threshold" />
@@ -180,7 +177,7 @@ export function ConfigPanel({ className }: ConfigPanelProps) {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="low-threshold">{t('pages.configuration.lowPriority')}</Label>
+              <Label htmlFor="low-threshold">Low Priority</Label>
               <Select defaultValue="30min">
                 <SelectTrigger>
                   <SelectValue placeholder="Select threshold" />
@@ -198,29 +195,29 @@ export function ConfigPanel({ className }: ConfigPanelProps) {
         
         {/* Notification Settings */}
         <div className="space-y-4">
-          <Label className="text-base">{t('pages.configuration.notificationPreferences')}</Label>
+          <Label className="text-base">Notification Preferences</Label>
           
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-medium">{t('pages.configuration.pushNotifications')}</h4>
-                <p className="text-sm text-muted-foreground">{t('pages.configuration.pushDescription')}</p>
+                <h4 className="font-medium">Push Notifications</h4>
+                <p className="text-sm text-muted-foreground">Receive alerts on your device</p>
               </div>
               <Switch defaultChecked />
             </div>
             
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-medium">{t('pages.configuration.smsAlerts')}</h4>
-                <p className="text-sm text-muted-foreground">{t('pages.configuration.smsDescription')}</p>
+                <h4 className="font-medium">SMS Alerts</h4>
+                <p className="text-sm text-muted-foreground">Get critical alerts via text message</p>
               </div>
               <Switch defaultChecked />
             </div>
             
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-medium">{t('pages.configuration.emailDigest')}</h4>
-                <p className="text-sm text-muted-foreground">{t('pages.configuration.emailDescription')}</p>
+                <h4 className="font-medium">Email Digest</h4>
+                <p className="text-sm text-muted-foreground">Daily summary of all alerts</p>
               </div>
               <Switch defaultChecked />
             </div>
@@ -231,11 +228,11 @@ export function ConfigPanel({ className }: ConfigPanelProps) {
       <CardFooter className="flex justify-between pt-2">
         <Button variant="outline" className="w-32" onClick={() => setSelectedInterval(processingInterval)}>
           <RotateCw className="h-4 w-4 mr-2" />
-          {t('common.reset')}
+          Reset
         </Button>
         <Button className="w-32" onClick={saveConfiguration}>
           <Save className="h-4 w-4 mr-2" />
-          {t('common.save')}
+          Save
         </Button>
       </CardFooter>
     </Card>
