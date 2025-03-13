@@ -1,8 +1,8 @@
 
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { toast } from 'sonner';
-import en from './locales/en';
-import pt from './locales/pt';
+import { en } from './locales/en';
+import { pt } from './locales/pt';
 
 // Tipo para as traduções
 export type TranslationsType = typeof en;
