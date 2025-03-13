@@ -50,22 +50,22 @@ export function StatusBadge({
       case 'high':
         icon = <AlertTriangle className="mr-1" size={size === 'sm' ? 12 : 16} />;
         variant = 'destructive';
-        badgeText = 'High';
+        badgeText = value;
         break;
       case 'medium':
         icon = <AlertCircle className="mr-1" size={size === 'sm' ? 12 : 16} />;
         variant = 'default';
-        badgeText = 'Medium';
+        badgeText = value;
         break;
       case 'low':
         icon = <Info className="mr-1" size={size === 'sm' ? 12 : 16} />;
         variant = 'secondary';
-        badgeText = 'Low';
+        badgeText = value;
         break;
       case 'info':
         icon = <Info className="mr-1" size={size === 'sm' ? 12 : 16} />;
         variant = 'outline';
-        badgeText = 'Info';
+        badgeText = value;
         break;
     }
   }
@@ -76,22 +76,22 @@ export function StatusBadge({
       case 'active':
         icon = <AlertCircle className="mr-1" size={size === 'sm' ? 12 : 16} />;
         variant = 'destructive';
-        badgeText = 'Active';
+        badgeText = value;
         break;
       case 'acknowledged':
         icon = <Clock className="mr-1" size={size === 'sm' ? 12 : 16} />;
         variant = 'default';
-        badgeText = 'Acknowledged';
+        badgeText = value;
         break;
       case 'resolved':
         icon = <CheckCircle2 className="mr-1" size={size === 'sm' ? 12 : 16} />;
         variant = 'secondary';
-        badgeText = 'Resolved';
+        badgeText = value;
         break;
       case 'expired':
         icon = <Clock className="mr-1" size={size === 'sm' ? 12 : 16} />;
         variant = 'outline';
-        badgeText = 'Expired';
+        badgeText = value;
         break;
     }
   }
@@ -103,38 +103,49 @@ export function StatusBadge({
     switch (value) {
       case 'route-deviation':
         icon = <MapPin className="mr-1" size={size === 'sm' ? 12 : 16} />;
-        badgeText = 'Route';
+        badgeText = value;
         break;
       case 'weather-condition':
         icon = <CloudLightning className="mr-1" size={size === 'sm' ? 12 : 16} />;
-        badgeText = 'Weather';
+        badgeText = value;
         break;
       case 'mechanical-issue':
         icon = <AlertOctagon className="mr-1" size={size === 'sm' ? 12 : 16} />;
-        badgeText = 'Mechanical';
+        badgeText = value;
         break;
       case 'traffic-congestion':
         icon = <Truck className="mr-1" size={size === 'sm' ? 12 : 16} />;
-        badgeText = 'Traffic';
+        badgeText = value;
         break;
       case 'security-breach':
         icon = <AlertTriangle className="mr-1" size={size === 'sm' ? 12 : 16} />;
-        badgeText = 'Security';
+        badgeText = value;
         break;
       case 'schedule-change':
         icon = <Calendar className="mr-1" size={size === 'sm' ? 12 : 16} />;
-        badgeText = 'Schedule';
+        badgeText = value;
         break;
       case 'fuel-status':
         icon = <Fuel className="mr-1" size={size === 'sm' ? 12 : 16} />;
-        badgeText = 'Fuel';
+        badgeText = value;
         break;
       case 'system-notification':
         icon = <Bell className="mr-1" size={size === 'sm' ? 12 : 16} />;
-        badgeText = 'System';
+        badgeText = value;
         break;
     }
   }
+
+  // Format display text with proper capitalization
+  const formatDisplayText = (text: string) => {
+    // For types like 'route-deviation', just show 'Route'
+    if (text.includes('-')) {
+      const firstPart = text.split('-')[0];
+      return firstPart.charAt(0).toUpperCase() + firstPart.slice(1);
+    }
+    // For regular values like 'high', show 'High'
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
 
   return (
     <Badge 
@@ -146,7 +157,7 @@ export function StatusBadge({
       )}
     >
       {showIcon && icon}
-      <span>{badgeText}</span>
+      <span>{formatDisplayText(badgeText)}</span>
     </Badge>
   );
 }
