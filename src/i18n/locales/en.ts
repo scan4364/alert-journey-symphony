@@ -1,135 +1,110 @@
+import { AlertType, AlertPriority, AlertStatus } from '@/utils/alertTypes';
 
-export default {
+export const en = {
   common: {
-    loading: "Loading...",
-    error: "An error occurred",
-    save: "Save",
-    cancel: "Cancel",
-    reset: "Reset",
-    delete: "Delete",
-    confirm: "Confirm",
-    search: "Search",
-    noResults: "No results found",
-    readMore: "Read more"
+    loading: 'Loading...',
+    error: 'Error',
+    edit: 'Edit',
+    delete: 'Delete',
+    save: 'Save',
+    cancel: 'Cancel',
+    readMore: 'Read More',
   },
-  header: {
-    dashboard: "Dashboard",
-    configuration: "Configuration",
-    history: "History"
+  components: {
+    sidebar: {
+      dashboard: 'Dashboard',
+      alerts: 'Alerts',
+      configuration: 'Configuration',
+      userManagement: 'User Management',
+      logout: 'Logout',
+    },
+    filters: {
+      priority: 'Priority',
+      status: 'Status',
+      type: 'Type',
+      applyFilters: 'Apply Filters',
+      resetFilters: 'Reset Filters',
+      search: 'Search',
+    },
   },
   pages: {
-    home: {
-      title: "Custom Alerts",
-      subtitle: "for Critical Decisions",
-      description: "Powerful, configurable alerts that filter out the noise and highlight what matters most.",
-      getStarted: "Get Started",
-      configureAlerts: "Configure Alerts",
-      featuresTitle: "Intelligent Alert Processing",
-      featuresDescription: "Our system prioritizes and processes alerts to ensure you're only notified about what truly matters.",
-      features: {
-        realTimeAlerts: {
-          title: "Real-time Alerts",
-          description: "Receive critical alerts in real-time with customizable priorities and notifications."
-        },
-        intelligentProcessing: {
-          title: "Intelligent Processing",
-          description: "Our system intelligently processes and filters alerts to prevent information overload."
-        },
-        dashboard: {
-          title: "Comprehensive Dashboard",
-          description: "View all your alerts in one place with our intuitive and customizable dashboard."
-        },
-        historicalData: {
-          title: "Historical Data",
-          description: "Access historical alert data to identify patterns and optimize operations."
-        }
-      },
-      chooseRole: "Choose Your Role",
-      roleDescription: "AlertSync adapts to your specific needs based on your role in the organization.",
-      continueAs: "Continue as Selected Role",
-      selectRole: "Select a Role to Continue",
-      ready: "Ready to Streamline Your Alerts?",
-      readyDescription: "Start customizing your alert experience today and focus on what truly matters."
-    },
     dashboard: {
-      title: "Alert Dashboard",
-      processingAlerts: "Processing alerts every",
-      minutes: "minutes",
-      refresh: "Refresh",
-      totalAlerts: "Total Alerts",
-      active: "Active",
-      acknowledged: "Acknowledged",
-      resolved: "Resolved",
-      highPriority: "High Priority",
-      mediumPriority: "Medium Priority",
-      lowPriority: "Low Priority",
-      searchAlerts: "Search alerts...",
-      filters: "Filters",
-      clearFilters: "Clear Filters",
-      allAlerts: "All Alerts",
-      noAlertsFound: "No alerts found",
-      noSearchResults: "No alerts match your search query.",
-      noFilterResults: "No alerts match your current filters.",
-      noActiveAlerts: "No active alerts",
-      allAlertsResolved: "All alerts have been acknowledged or resolved.",
-      noAcknowledgedAlerts: "No acknowledged alerts",
-      noAlertsHandled: "There are no alerts currently being handled.",
-      noResolvedAlerts: "No resolved alerts",
-      noAlertsResolvedYet: "None of your alerts have been resolved yet."
+      title: 'Dashboard',
+      subtitle: 'Overview of your fleet',
+      totalAlerts: 'Total Alerts',
+      activeAlerts: 'Active Alerts',
+      acknowledgedAlerts: 'Acknowledged Alerts',
+    },
+    alerts: {
+      title: 'Alerts',
+      subtitle: 'Manage and monitor your fleet alerts',
+      priority: {
+        high: 'High',
+        medium: 'Medium',
+        low: 'Low',
+        info: 'Info',
+      },
+      status: {
+        active: 'Active',
+        acknowledged: 'Acknowledged',
+        resolved: 'Resolved',
+        expired: 'Expired',
+      },
+      type: {
+        'route-deviation': 'Route Deviation',
+        'weather-condition': 'Weather Condition',
+        'mechanical-issue': 'Mechanical Issue',
+        'traffic-congestion': 'Traffic Congestion',
+        'security-breach': 'Security Breach',
+        'schedule-change': 'Schedule Change',
+        'fuel-status': 'Fuel Status',
+        'system-notification': 'System Notification',
+      },
     },
     configuration: {
-      title: "Alert Configuration",
-      subtitle: "Customize how alerts are processed and delivered",
-      panelTitle: "Alert Configuration",
-      panelDescription: "Customize how alerts are processed and displayed",
-      processingInterval: "Processing Interval",
-      minutes: "minutes",
-      intervalDescription: "Alerts will be processed and consolidated every",
-      intervalMoreInfo: "minutes to avoid notification overload.",
-      alertTypes: "Alert Types",
-      priorityThresholds: "Priority Thresholds",
-      highPriority: "High Priority",
-      mediumPriority: "Medium Priority",
-      lowPriority: "Low Priority",
-      notificationPreferences: "Notification Preferences",
-      pushNotifications: "Push Notifications",
-      pushDescription: "Receive alerts on your device",
-      smsAlerts: "SMS Alerts",
-      smsDescription: "Get critical alerts via text message",
-      emailDigest: "Email Digest",
-      emailDescription: "Daily summary of all alerts"
+      title: 'Configuration',
+      subtitle: 'Manage your application settings',
     },
-    history: {
-      title: "Alert History",
-      subtitle: "View historical alerts and filter by date",
-      pickDate: "Pick a date",
-      newestFirst: "Newest First",
-      oldestFirst: "Oldest First",
-      clear: "Clear",
-      noAlertsFound: "No alerts found",
-      noAlertsRecorded: "No alerts were recorded on",
-      noHistoricalAlerts: "No historical alerts are available.",
-      clearDateFilter: "Clear Date Filter"
+    userManagement: {
+      title: 'User Management',
+      subtitle: 'Manage users and roles',
     },
     notFound: {
-      title: "404",
-      subtitle: "Oops! Page not found",
-      returnHome: "Return to Home"
-    }
+      title: 'Page Not Found',
+      subtitle: 'The page you are looking for does not exist.',
+      returnHome: 'Return to Home',
+    },
   },
   alerts: {
-    acknowledge: "Acknowledge",
-    markResolved: "Mark as Resolved",
-    deleteAlert: "Delete Alert"
+    acknowledge: 'Acknowledge',
+    markResolved: 'Mark as Resolved',
+    deleteAlert: 'Delete Alert',
   },
-  footer: {
-    copyright: "© {year} AlertSync | Custom Alert System",
-    privacyPolicy: "Privacy Policy",
-    termsOfService: "Terms of Service",
-    contact: "Contact"
+  driver: {
+    preview: {
+      title: "Driver Preview",
+      description: "This is an example of how alerts will appear in the driver's app.",
+      alertTitle: "Smartphone View",
+      alertDescription: "This preview simulates how alerts are displayed in the driver's mobile app."
+    },
+    mobileApp: {
+      title: "FleetAlert Driver",
+      subtitle: "Priority alerts",
+      alertsHeading: "Active Alerts",
+      alertsDescription: "Alerts that require your attention"
+    },
+    alertExample: {
+      title: "Route Deviation Detected",
+      description: "You are 2.5km off the planned route. Estimated delay: 15 minutes."
+    },
+    actions: {
+      viewMap: "View Map",
+      acknowledge: "Acknowledge"
+    },
+    nav: {
+      alerts: "Alerts",
+      routes: "Routes",
+      profile: "Profile"
+    }
   },
-  language: {
-    en: "English",
-    pt: "Portuguese"
-  }
 };
