@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -15,6 +14,7 @@ import {
 } from 'lucide-react';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const features = [
   {
@@ -39,7 +39,6 @@ const features = [
   },
 ];
 
-// Define animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -66,8 +65,8 @@ const itemVariants = {
 const Index = () => {
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
   const [scrollY, setScrollY] = useState(0);
+  const { t } = useLanguage();
   
-  // Scroll effect
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
@@ -78,7 +77,6 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
         <motion.div 
           className="absolute top-0 left-0 w-full h-full -z-10 opacity-50"
@@ -113,8 +111,7 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              <span className="text-primary">Custom Alerts</span> for <br className="md:hidden" />
-              Critical Decisions
+              <span className="text-primary">{t('pages.home.title')}</span> {t('pages.home.subtitle')}
             </motion.h1>
             
             <motion.p 
@@ -123,7 +120,7 @@ const Index = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
-              Powerful, configurable alerts that filter out the noise and highlight what matters most.
+              {t('pages.home.description')}
             </motion.p>
             
             <motion.div 
@@ -134,14 +131,14 @@ const Index = () => {
             >
               <Button size="lg" asChild className="px-6 py-6 text-base">
                 <Link to="/dashboard">
-                  Get Started
+                  {t('pages.home.getStarted')}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               
               <Button variant="outline" size="lg" asChild className="px-6 py-6 text-base">
                 <Link to="/configuration">
-                  Configure Alerts
+                  {t('pages.home.configureAlerts')}
                 </Link>
               </Button>
             </motion.div>
@@ -149,7 +146,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Features Section */}
       <section className="py-20 bg-secondary/50">
         <div className="container">
           <motion.div 
@@ -159,10 +155,10 @@ const Index = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Intelligent Alert Processing
+              {t('pages.home.featuresTitle')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              Our system prioritizes and processes alerts to ensure you're only notified about what truly matters.
+              {t('pages.home.featuresDescription')}
             </p>
           </motion.div>
           
@@ -173,32 +169,61 @@ const Index = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            {features.map((feature, index) => (
-              <motion.div 
-                key={index}
-                className="glass-card p-6 rounded-lg transition-all"
-                variants={itemVariants}
-              >
-                <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
-                  <feature.icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-display font-medium mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </motion.div>
-            ))}
+            <motion.div 
+              className="glass-card p-6 rounded-lg transition-all"
+              variants={itemVariants}
+            >
+              <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
+                <Bell className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-display font-medium mb-2">{t('pages.home.features.realTimeAlerts.title')}</h3>
+              <p className="text-muted-foreground">{t('pages.home.features.realTimeAlerts.description')}</p>
+            </motion.div>
+            
+            <motion.div 
+              className="glass-card p-6 rounded-lg transition-all"
+              variants={itemVariants}
+            >
+              <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
+                <Settings className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-display font-medium mb-2">{t('pages.home.features.intelligentProcessing.title')}</h3>
+              <p className="text-muted-foreground">{t('pages.home.features.intelligentProcessing.description')}</p>
+            </motion.div>
+            
+            <motion.div 
+              className="glass-card p-6 rounded-lg transition-all"
+              variants={itemVariants}
+            >
+              <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
+                <BarChart2 className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-display font-medium mb-2">{t('pages.home.features.dashboard.title')}</h3>
+              <p className="text-muted-foreground">{t('pages.home.features.dashboard.description')}</p>
+            </motion.div>
+            
+            <motion.div 
+              className="glass-card p-6 rounded-lg transition-all"
+              variants={itemVariants}
+            >
+              <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
+                <Clock className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-display font-medium mb-2">{t('pages.home.features.historicalData.title')}</h3>
+              <p className="text-muted-foreground">{t('pages.home.features.historicalData.description')}</p>
+            </motion.div>
           </motion.div>
         </div>
       </section>
       
-      {/* Persona Section */}
       <section className="py-20">
         <div className="container">
           <div className="text-center max-w-xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Choose Your Role
+              {t('pages.home.chooseRole')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              AlertSync adapts to your specific needs based on your role in the organization.
+              {t('pages.home.roleDescription')}
             </p>
           </div>
           
@@ -215,7 +240,7 @@ const Index = () => {
               className="px-6 py-6 text-base transition-all"
             >
               <Link to="/dashboard">
-                {selectedPersona ? 'Continue as Selected Role' : 'Select a Role to Continue'}
+                {selectedPersona ? t('pages.home.continueAs') : t('pages.home.selectRole')}
                 {selectedPersona && <CheckCircle2 className="ml-2 h-5 w-5" />}
               </Link>
             </Button>
@@ -223,15 +248,14 @@ const Index = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Ready to Streamline Your Alerts?
+              {t('pages.home.ready')}
             </h2>
             <p className="text-xl mb-8 opacity-90">
-              Start customizing your alert experience today and focus on what truly matters.
+              {t('pages.home.readyDescription')}
             </p>
             
             <Button 
@@ -241,7 +265,7 @@ const Index = () => {
               className="px-6 py-6 text-base"
             >
               <Link to="/dashboard">
-                Get Started
+                {t('pages.home.getStarted')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -255,3 +279,4 @@ const Index = () => {
 };
 
 export default Index;
+

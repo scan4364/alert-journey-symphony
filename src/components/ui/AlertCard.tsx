@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,6 +23,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 interface AlertCardProps {
   alert: AlertType;
@@ -34,6 +34,7 @@ interface AlertCardProps {
 export function AlertCard({ alert, expanded = false, className }: AlertCardProps) {
   const [isExpanded, setIsExpanded] = useState(expanded);
   const { updateAlertStatus, deleteAlert } = useAlerts();
+  const { t } = useLanguage();
   
   // Format date to readable format
   const formatDate = (date: Date) => {
@@ -114,16 +115,16 @@ export function AlertCard({ alert, expanded = false, className }: AlertCardProps
             <DropdownMenuContent align="end">
               {alert.status === 'active' && (
                 <DropdownMenuItem onClick={() => handleStatusChange('acknowledged')}>
-                  <Clock className="mr-2 h-4 w-4" /> Acknowledge
+                  <Clock className="mr-2 h-4 w-4" /> {t('alerts.acknowledge')}
                 </DropdownMenuItem>
               )}
               {(alert.status === 'active' || alert.status === 'acknowledged') && (
                 <DropdownMenuItem onClick={() => handleStatusChange('resolved')}>
-                  <CheckCircle2 className="mr-2 h-4 w-4" /> Mark as Resolved
+                  <CheckCircle2 className="mr-2 h-4 w-4" /> {t('alerts.markResolved')}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onClick={handleDelete} className="text-destructive">
-                <X className="mr-2 h-4 w-4" /> Delete Alert
+                <X className="mr-2 h-4 w-4" /> {t('alerts.deleteAlert')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -147,7 +148,7 @@ export function AlertCard({ alert, expanded = false, className }: AlertCardProps
             className="p-0 h-6 mt-1 text-muted-foreground hover:text-foreground"
             onClick={() => setIsExpanded(true)}
           >
-            Read more
+            {t('common.readMore')}
           </Button>
         )}
       </CardContent>
