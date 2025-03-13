@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -11,11 +10,13 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const History = () => {
   const { alerts } = useAlerts();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const { t } = useLanguage();
   
   // Sort alerts by timestamp
   const sortedAlerts = [...alerts].sort((a, b) => {
@@ -61,9 +62,9 @@ const History = () => {
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
             <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">Alert History</h1>
+              <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">{t('pages.history.title')}</h1>
               <p className="text-muted-foreground">
-                View historical alerts and filter by date
+                {t('pages.history.subtitle')}
               </p>
             </div>
             
@@ -75,7 +76,7 @@ const History = () => {
                     {selectedDate ? (
                       format(selectedDate, "PPP")
                     ) : (
-                      <span>Pick a date</span>
+                      <span>{t('pages.history.pickDate')}</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -94,7 +95,7 @@ const History = () => {
                         className="w-full"
                         onClick={() => setSelectedDate(undefined)}
                       >
-                        Clear
+                        {t('pages.history.clear')}
                       </Button>
                     </div>
                   )}
@@ -108,9 +109,9 @@ const History = () => {
                 className="flex items-center"
               >
                 {sortDirection === 'desc' ? (
-                  <>Newest First <ChevronDown className="ml-1 h-4 w-4" /></>
+                  <>{t('pages.history.newestFirst')} <ChevronDown className="ml-1 h-4 w-4" /></>
                 ) : (
-                  <>Oldest First <ChevronUp className="ml-1 h-4 w-4" /></>
+                  <>{t('pages.history.oldestFirst')} <ChevronUp className="ml-1 h-4 w-4" /></>
                 )}
               </Button>
             </div>
@@ -141,15 +142,15 @@ const History = () => {
           ) : (
             <div className="text-center py-16 bg-muted/30 rounded-lg border border-border">
               <CalendarIcon className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
-              <h3 className="text-xl font-display font-medium mb-2">No alerts found</h3>
+              <h3 className="text-xl font-display font-medium mb-2">{t('pages.history.noAlertsFound')}</h3>
               <p className="text-muted-foreground mb-4">
                 {selectedDate 
-                  ? `No alerts were recorded on ${format(selectedDate, "PPP")}.` 
-                  : 'No historical alerts are available.'}
+                  ? `${t('pages.history.noAlertsRecorded')} ${format(selectedDate, "PPP")}.` 
+                  : t('pages.history.noHistoricalAlerts')}
               </p>
               {selectedDate && (
                 <Button variant="outline" onClick={() => setSelectedDate(undefined)}>
-                  Clear Date Filter
+                  {t('pages.history.clearDateFilter')}
                 </Button>
               )}
             </div>
