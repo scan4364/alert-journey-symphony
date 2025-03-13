@@ -32,6 +32,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const Dashboard = () => {
   const { 
@@ -43,6 +44,7 @@ const Dashboard = () => {
   } = useAlerts();
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { t } = useLanguage();
   
   // Filter alerts by search query
   const searchedAlerts = searchQuery 
@@ -73,8 +75,8 @@ const Dashboard = () => {
     // Simulate API call/refresh
     setTimeout(() => {
       setRefreshing(false);
-      toast.success('Alerts refreshed', {
-        description: `Last processed: ${new Date().toLocaleTimeString()}`,
+      toast.success(t('common.loading'), {
+        description: `${t('common.loading')}: ${new Date().toLocaleTimeString()}`,
       });
     }, 1000);
   };
@@ -96,9 +98,9 @@ const Dashboard = () => {
           {/* Dashboard Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
             <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">Alert Dashboard</h1>
+              <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">{t('pages.dashboard.title')}</h1>
               <p className="text-muted-foreground">
-                Processing alerts every {processingInterval} minutes
+                {t('pages.dashboard.processingAlerts')} {processingInterval} {t('pages.dashboard.minutes')}
               </p>
             </div>
             
@@ -110,7 +112,7 @@ const Dashboard = () => {
                 disabled={refreshing}
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
-                Refresh
+                {t('pages.dashboard.refresh')}
               </Button>
             </div>
           </div>
@@ -120,7 +122,7 @@ const Dashboard = () => {
             <div className="bg-card rounded-lg p-4 shadow-sm border">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-muted-foreground text-sm">Total Alerts</p>
+                  <p className="text-muted-foreground text-sm">{t('pages.dashboard.totalAlerts')}</p>
                   <h3 className="text-2xl font-display font-bold">{alertStats.total}</h3>
                 </div>
                 <Bell className="h-8 w-8 text-muted-foreground/30" />
@@ -130,7 +132,7 @@ const Dashboard = () => {
             <div className="bg-card rounded-lg p-4 shadow-sm border">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-muted-foreground text-sm">Active</p>
+                  <p className="text-muted-foreground text-sm">{t('pages.dashboard.active')}</p>
                   <h3 className="text-2xl font-display font-bold">{alertStats.active}</h3>
                 </div>
                 <AlertTriangle className="h-8 w-8 text-alert-high/30" />
@@ -140,7 +142,7 @@ const Dashboard = () => {
             <div className="bg-card rounded-lg p-4 shadow-sm border">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-muted-foreground text-sm">Acknowledged</p>
+                  <p className="text-muted-foreground text-sm">{t('pages.dashboard.acknowledged')}</p>
                   <h3 className="text-2xl font-display font-bold">{alertStats.acknowledged}</h3>
                 </div>
                 <Clock className="h-8 w-8 text-alert-medium/30" />
@@ -150,7 +152,7 @@ const Dashboard = () => {
             <div className="bg-card rounded-lg p-4 shadow-sm border">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-muted-foreground text-sm">Resolved</p>
+                  <p className="text-muted-foreground text-sm">{t('pages.dashboard.resolved')}</p>
                   <h3 className="text-2xl font-display font-bold">{alertStats.resolved}</h3>
                 </div>
                 <CheckCircle2 className="h-8 w-8 text-alert-low/30" />
@@ -163,7 +165,7 @@ const Dashboard = () => {
             <div className="bg-alert-high/10 rounded-lg px-4 py-3 flex items-center space-x-3">
               <AlertTriangle className="h-5 w-5 text-alert-high" />
               <div>
-                <p className="text-sm font-medium">High Priority</p>
+                <p className="text-sm font-medium">{t('pages.dashboard.highPriority')}</p>
                 <p className="text-2xl font-display font-bold">{priorityCounts.high}</p>
               </div>
             </div>
@@ -171,7 +173,7 @@ const Dashboard = () => {
             <div className="bg-alert-medium/10 rounded-lg px-4 py-3 flex items-center space-x-3">
               <AlertTriangle className="h-5 w-5 text-alert-medium" />
               <div>
-                <p className="text-sm font-medium">Medium Priority</p>
+                <p className="text-sm font-medium">{t('pages.dashboard.mediumPriority')}</p>
                 <p className="text-2xl font-display font-bold">{priorityCounts.medium}</p>
               </div>
             </div>
@@ -179,7 +181,7 @@ const Dashboard = () => {
             <div className="bg-alert-low/10 rounded-lg px-4 py-3 flex items-center space-x-3">
               <AlertTriangle className="h-5 w-5 text-alert-low" />
               <div>
-                <p className="text-sm font-medium">Low Priority</p>
+                <p className="text-sm font-medium">{t('pages.dashboard.lowPriority')}</p>
                 <p className="text-2xl font-display font-bold">{priorityCounts.low}</p>
               </div>
             </div>
@@ -190,7 +192,7 @@ const Dashboard = () => {
             <div className="relative flex-grow">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search alerts..."
+                placeholder={t('pages.dashboard.searchAlerts')}
                 className="pl-9"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -212,7 +214,7 @@ const Dashboard = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="flex items-center">
                     <Filter className="h-4 w-4 mr-2" />
-                    Filters
+                    {t('pages.dashboard.filters')}
                     {(activeFilters.priority.length > 0 || 
                       activeFilters.status.length > 0 || 
                       activeFilters.type.length > 0) && (
@@ -225,10 +227,10 @@ const Dashboard = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Filter Alerts</DropdownMenuLabel>
+                  <DropdownMenuLabel>{t('pages.dashboard.filters')}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   
-                  <DropdownMenuLabel>Priority</DropdownMenuLabel>
+                  <DropdownMenuLabel>{t('pages.configuration.priorityThresholds')}</DropdownMenuLabel>
                   {(['high', 'medium', 'low', 'info'] as AlertPriority[]).map(priority => (
                     <DropdownMenuCheckboxItem
                       key={priority}
@@ -247,7 +249,7 @@ const Dashboard = () => {
                   ))}
                   
                   <DropdownMenuSeparator />
-                  <DropdownMenuLabel>Status</DropdownMenuLabel>
+                  <DropdownMenuLabel>{t('pages.dashboard.status')}</DropdownMenuLabel>
                   {(['active', 'acknowledged', 'resolved'] as AlertStatus[]).map(status => (
                     <DropdownMenuCheckboxItem
                       key={status}
@@ -276,7 +278,7 @@ const Dashboard = () => {
                       onClick={clearFilters}
                     >
                       <X className="h-4 w-4 mr-2" />
-                      Clear All Filters
+                      {t('pages.dashboard.clearFilters')}
                     </Button>
                   )}
                 </DropdownMenuContent>
@@ -287,10 +289,10 @@ const Dashboard = () => {
           {/* Alerts Tabs */}
           <Tabs defaultValue="all" className="w-full">
             <TabsList className="mb-6">
-              <TabsTrigger value="all">All Alerts</TabsTrigger>
-              <TabsTrigger value="active">Active</TabsTrigger>
-              <TabsTrigger value="acknowledged">Acknowledged</TabsTrigger>
-              <TabsTrigger value="resolved">Resolved</TabsTrigger>
+              <TabsTrigger value="all">{t('pages.dashboard.allAlerts')}</TabsTrigger>
+              <TabsTrigger value="active">{t('pages.dashboard.active')}</TabsTrigger>
+              <TabsTrigger value="acknowledged">{t('pages.dashboard.acknowledged')}</TabsTrigger>
+              <TabsTrigger value="resolved">{t('pages.dashboard.resolved')}</TabsTrigger>
             </TabsList>
             
             <TabsContent value="all" className="mt-0">
@@ -304,12 +306,12 @@ const Dashboard = () => {
               ) : (
                 <div className="text-center py-16 bg-muted/30 rounded-lg border border-border">
                   <Bell className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
-                  <h3 className="text-xl font-display font-medium mb-2">No alerts found</h3>
+                  <h3 className="text-xl font-display font-medium mb-2">{t('pages.dashboard.noAlertsFound')}</h3>
                   <p className="text-muted-foreground mb-4">
-                    {searchQuery ? 'No alerts match your search query.' : 'No alerts match your current filters.'}
+                    {searchQuery ? t('pages.dashboard.noSearchResults') : t('pages.dashboard.noFilterResults')}
                   </p>
                   <Button variant="outline" onClick={clearFilters}>
-                    Clear Filters
+                    {t('pages.dashboard.clearFilters')}
                   </Button>
                 </div>
               )}
@@ -327,8 +329,8 @@ const Dashboard = () => {
               {searchedAlerts.filter(alert => alert.status === 'active').length === 0 && (
                 <div className="text-center py-16 bg-muted/30 rounded-lg border border-border">
                   <CheckCircle2 className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
-                  <h3 className="text-xl font-display font-medium">No active alerts</h3>
-                  <p className="text-muted-foreground">All alerts have been acknowledged or resolved.</p>
+                  <h3 className="text-xl font-display font-medium">{t('pages.dashboard.noActiveAlerts')}</h3>
+                  <p className="text-muted-foreground">{t('pages.dashboard.allAlertsResolved')}</p>
                 </div>
               )}
             </TabsContent>
@@ -345,8 +347,8 @@ const Dashboard = () => {
               {searchedAlerts.filter(alert => alert.status === 'acknowledged').length === 0 && (
                 <div className="text-center py-16 bg-muted/30 rounded-lg border border-border">
                   <Clock className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
-                  <h3 className="text-xl font-display font-medium">No acknowledged alerts</h3>
-                  <p className="text-muted-foreground">There are no alerts currently being handled.</p>
+                  <h3 className="text-xl font-display font-medium">{t('pages.dashboard.noAcknowledgedAlerts')}</h3>
+                  <p className="text-muted-foreground">{t('pages.dashboard.noAlertsHandled')}</p>
                 </div>
               )}
             </TabsContent>
@@ -363,8 +365,8 @@ const Dashboard = () => {
               {searchedAlerts.filter(alert => alert.status === 'resolved').length === 0 && (
                 <div className="text-center py-16 bg-muted/30 rounded-lg border border-border">
                   <CheckCircle2 className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
-                  <h3 className="text-xl font-display font-medium">No resolved alerts</h3>
-                  <p className="text-muted-foreground">None of your alerts have been resolved yet.</p>
+                  <h3 className="text-xl font-display font-medium">{t('pages.dashboard.noResolvedAlerts')}</h3>
+                  <p className="text-muted-foreground">{t('pages.dashboard.noAlertsResolvedYet')}</p>
                 </div>
               )}
             </TabsContent>
